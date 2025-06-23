@@ -26,9 +26,15 @@ function handlePostClick(id) {
         <p><strong>Author:</strong> ${post.author}</p>
         <img src="${post.image}" alt="Post Image" />
         <p>${post.content}</p>
-      `;
+        <button id="delete-post-btn">Delete This Post</button>
+    `;
+    
+      document.getElementById('delete-post-btn').addEventListener('click', () => {
+        removePostFromUI(id);
+      });
     });
 }
+
 
 function addNewPostListener() {
   const form = document.getElementById('new-post-form');
@@ -54,6 +60,22 @@ function addNewPostListener() {
     });
   });
 }
+
+function removePostFromUI(id) {
+
+  const postList = document.getElementById('post-list');
+  const postDivs = postList.querySelectorAll('div');
+
+  postDivs.forEach(div => {
+    if (div.dataset.id === String(id)) {
+      div.remove();
+    }
+  });
+
+  const detail = document.getElementById('post-detail');
+  detail.innerHTML = `<p>Select a post to view its details.</p>`;
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
   addNewPostListener();
